@@ -1,0 +1,30 @@
+name: Java CI with Maven
+
+on:
+  push:
+    branches:
+      - develop
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configurar Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: maven
+
+      - name: Build con Maven
+        run: mvn -B package --file pom.xml
+
+      - name: Ejecutar pruebas
+        run: mvn test
